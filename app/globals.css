@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-white text-navy antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    font-stretch: 100%;
+  }
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 3px solid #C8102E;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  [id] {
+    scroll-margin-top: 6.5rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .wrap {
+    @apply mx-auto w-full max-w-site px-5 sm:px-8;
+  }
+  .display {
+    font-stretch: 125%;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.02;
+  }
+  .heading {
+    font-stretch: 112%;
+    font-weight: 750;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+  }
+  .h2 {
+    @apply heading text-[clamp(1.85rem,3.4vw,2.75rem)];
+  }
+  .lede {
+    @apply text-lg leading-relaxed text-steel sm:text-xl;
+  }
+  .btn {
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-md px-6 py-3 text-base font-semibold transition-colors duration-150;
+    font-stretch: 105%;
+  }
+  .btn-primary {
+    @apply btn bg-livery text-white hover:bg-livery-dark;
+  }
+  .btn-navy {
+    @apply btn bg-navy text-white hover:bg-navy-soft;
+  }
+  .btn-ghost-light {
+    @apply btn border-2 border-white/70 text-white hover:border-white hover:bg-white/10;
+  }
+  .btn-ghost {
+    @apply btn border-2 border-navy/20 text-navy hover:border-navy;
+  }
+  .link {
+    @apply font-semibold text-navy underline decoration-livery decoration-2 underline-offset-4 hover:decoration-navy;
+  }
+  /* The vehicle coachline: a red pinstripe over a navy band, as painted on the fleet. */
+  .coachline {
+    height: 10px;
+    background: linear-gradient(to bottom, #C8102E 0 4px, transparent 4px 6px, #13294B 6px 10px);
+  }
+  .field {
+    @apply block w-full rounded-md border border-rule bg-white px-4 py-3 text-base text-navy placeholder:text-steel-light transition-colors;
+    min-height: 48px;
+  }
+  .field:hover { @apply border-steel-light; }
+  .field:focus { @apply border-navy outline-none ring-2 ring-navy/20; }
+  .field[aria-invalid="true"] { @apply border-livery ring-2 ring-livery/15; }
+  .label {
+    @apply mb-1.5 block text-sm font-semibold text-navy;
+  }
+}
+
+/* One orchestrated moment: the hero coachline draws in, headline follows. */
+@keyframes draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+.hero-line { transform-origin: left; animation: draw 900ms cubic-bezier(.2,.7,.2,1) both; }
+.hero-rise { animation: rise 700ms cubic-bezier(.2,.7,.2,1) both; }
+.hero-rise-2 { animation: rise 700ms 120ms cubic-bezier(.2,.7,.2,1) both; }
+.hero-rise-3 { animation: rise 700ms 240ms cubic-bezier(.2,.7,.2,1) both; }
