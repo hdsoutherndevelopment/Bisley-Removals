@@ -1,71 +1,126 @@
 import Link from "next/link";
-import { Instagram, MapPin, Phone, Clock } from "lucide-react";
 import { Logo } from "./Logo";
-import { business, fullAddress, nav } from "@/lib/config";
+import { business, fullAddress, isDemo } from "@/lib/config";
+
+const columns = [
+  {
+    title: "Services",
+    links: [
+      { href: "/removals", label: "Removals" },
+      { href: "/packing", label: "Packing" },
+      { href: "/storage", label: "Storage" },
+      { href: "/commercial", label: "Office and commercial moves" },
+    ],
+  },
+  {
+    title: "Moving help",
+    links: [
+      { href: "/moving-day", label: "Moving day" },
+      { href: "/moving-tips", label: "Moving checklist" },
+      { href: "/insurance", label: "Insurance" },
+      { href: "/reviews", label: "Reviews" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { href: "/about", label: "About us" },
+      { href: "/careers", label: "Careers" },
+      { href: "/contact", label: "Contact" },
+      { href: "/quote", label: "Get a free quote" },
+    ],
+  },
+] as const;
+
+const legal = [
+  { href: "/privacy", label: "Privacy policy" },
+  { href: "/terms", label: "Terms of use" },
+  { href: "/cookies", label: "Cookie policy" },
+  { href: "/accessibility", label: "Accessibility" },
+] as const;
 
 export function Footer() {
   return (
-    <footer className="bg-navy-deep text-white">
+    <footer className="surface-inverse">
       <div className="coachline" aria-hidden="true" />
-      <div className="wrap grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
+      <div className="wrap grid gap-12 pb-12 pt-14 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr_1.4fr]">
         <div>
-          <Logo light />
-          <p className="mt-5 max-w-xs text-white/75">
-            Family-run removals and storage from Bisley, near Woking, since 1985. {business.motto}.
+          <Logo inverse />
+          <p className="mt-5 max-w-[24rem] text-fg-muted">
+            Removals, packing and containerised storage from our yard in Bisley, near Woking, since {business.established}.
           </p>
-          <a
-            href={business.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 inline-flex items-center gap-2 text-white/85 hover:text-white"
-          >
-            <Instagram className="h-5 w-5" aria-hidden="true" /> @bisleyremovals
-          </a>
         </div>
 
-        <nav aria-label="Footer">
-          <h2 className="heading text-base">Explore</h2>
-          <ul className="mt-4 space-y-2.5 text-white/75">
-            {nav.map((n) => (
-              <li key={n.href}><Link className="hover:text-white" href={n.href}>{n.label}</Link></li>
-            ))}
-            <li><Link className="hover:text-white" href="/quote">Get a Free Quote</Link></li>
-          </ul>
-        </nav>
+        {columns.map((col) => (
+          <nav key={col.title} aria-label={col.title}>
+            <h2 className="font-body text-body font-bold">{col.title}</h2>
+            <ul className="mt-3">
+              {col.links.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} className="inline-flex min-h-[2.75rem] items-center text-fg-muted underline-offset-[0.2em] hover:text-fg hover:underline">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))}
 
         <div>
-          <h2 className="heading text-base">Services</h2>
-          <ul className="mt-4 space-y-2.5 text-white/75">
-            <li><Link className="hover:text-white" href="/removals">House removals</Link></li>
-            <li><Link className="hover:text-white" href="/removals#packing">Packing services</Link></li>
-            <li><Link className="hover:text-white" href="/removals#commercial">Commercial removals</Link></li>
-            <li><Link className="hover:text-white" href="/storage">Secure storage</Link></li>
-            <li><Link className="hover:text-white" href="/storage#calculator">Storage calculator</Link></li>
-          </ul>
-        </div>
-
-        <div>
-          <h2 className="heading text-base">Get in touch</h2>
-          <ul className="mt-4 space-y-4 text-white/80">
-            <li className="flex gap-3">
-              <Phone className="mt-1 h-4 w-4 shrink-0 text-livery" aria-hidden="true" />
-              <a href={business.phoneHref} className="text-lg font-semibold text-white hover:underline">{business.phone}</a>
+          <h2 className="font-body text-body font-bold">Get in touch</h2>
+          <ul className="mt-3 space-y-1">
+            <li>
+              <a href={business.phoneHref} className="numerals inline-flex min-h-11 items-center text-h4 font-bold underline-offset-[0.2em] hover:underline">
+                <span className="sr-only">Call </span>
+                {business.phone}
+              </a>
             </li>
-            <li className="flex gap-3">
-              <MapPin className="mt-1 h-4 w-4 shrink-0 text-livery" aria-hidden="true" />
-              <address className="not-italic">{fullAddress}</address>
+            <li>
+              <a href={business.emailHref} className="link link-standalone font-normal">{business.email}</a>
             </li>
-            <li className="flex gap-3">
-              <Clock className="mt-1 h-4 w-4 shrink-0 text-livery" aria-hidden="true" />
-              <span>Office open {business.officeHours.label}</span>
+            <li>
+              <address className="not-italic text-fg-muted">{fullAddress}</address>
+              <a href={business.directionsUrl} target="_blank" rel="noopener noreferrer" className="link link-standalone font-normal">
+                Get directions<span className="sr-only"> (opens Google Maps in a new tab)</span>
+              </a>
+            </li>
+            <li>
+              <a href={business.instagram} target="_blank" rel="noopener noreferrer" className="link link-standalone font-normal">
+                Instagram<span className="sr-only"> (opens in a new tab)</span>
+              </a>
             </li>
           </ul>
         </div>
       </div>
-      <div className="border-t border-white/10">
-        <div className="wrap flex flex-col gap-3 py-6 text-sm text-white/60 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} {business.name}. All rights reserved.</p>
-          <Link href="/privacy" className="hover:text-white">Privacy policy</Link>
+
+      <div className="border-t border-rule">
+        <div className="wrap space-y-4 py-8 text-small text-fg-muted">
+          <p>
+            {business.legalName}. Registered in England and Wales, company number {business.companyNumber}. Registered office:{" "}
+            {business.registeredOffice}.
+          </p>
+          <p>
+            Something gone wrong? Email <a href={business.emailHref} className="link font-normal">{business.email}</a> or call{" "}
+            <a href={business.phoneHref} className="link font-normal">{business.phone}</a> and tell us what happened. We would like the chance to put it right.
+          </p>
+          <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
+            <ul className="flex flex-wrap gap-x-6 gap-y-1">
+              {legal.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} className="inline-flex min-h-[2.75rem] items-center underline underline-offset-[0.2em] hover:text-fg">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <p>© {new Date().getFullYear()} {business.legalName}</p>
+          </div>
+          {isDemo && (
+            <p className="border-t border-rule pt-4">
+              This is a concept website prepared by HD Southern Development to show what Bisley Removal Services&apos; site could look like. It is not the
+              company&apos;s official website. Phone, email and quote links reach the company directly.
+            </p>
+          )}
         </div>
       </div>
     </footer>

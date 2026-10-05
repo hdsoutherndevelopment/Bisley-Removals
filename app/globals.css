@@ -1,110 +1,245 @@
+@import "./tokens.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   html {
-    scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
   body {
-    @apply bg-white text-navy antialiased;
-    font-size: 1.0625rem;
-    line-height: 1.6;
-    font-stretch: 100%;
+    background-color: var(--bg-page);
+    color: var(--fg);
+    font-family: var(--ff-body);
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  h1, h2, h3, h4 {
+  h1, h2, h3 {
+    font-family: var(--ff-display);
+    color: var(--heading);
     text-wrap: balance;
   }
-  p {
+  h4 {
+    color: var(--heading);
+    text-wrap: balance;
+  }
+  p, li, dd, blockquote {
     text-wrap: pretty;
   }
   :focus-visible {
-    outline: 3px solid #C8102E;
-    outline-offset: 3px;
-    border-radius: 4px;
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
   }
   [id] {
-    scroll-margin-top: 6.5rem;
+    scroll-margin-top: 1.5rem;
+  }
+  ::selection {
+    background-color: var(--c-cream);
+    color: var(--c-tyre);
   }
   @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
     }
   }
 }
 
 @layer components {
   .wrap {
-    @apply mx-auto w-full max-w-site px-5 sm:px-8;
+    width: 100%;
+    max-width: calc(var(--layout-max) + 2 * var(--space-margin));
+    margin-inline: auto;
+    padding-inline: max(var(--space-margin), var(--safe-left)) max(var(--space-margin), var(--safe-right));
   }
-  .display {
-    font-stretch: 125%;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.02;
+
+  .section {
+    padding-block: var(--space-section);
   }
-  .heading {
-    font-stretch: 112%;
-    font-weight: 750;
-    letter-spacing: -0.015em;
-    line-height: 1.1;
-  }
-  .h2 {
-    @apply heading text-[clamp(1.85rem,3.4vw,2.75rem)];
-  }
-  .lede {
-    @apply text-lg leading-relaxed text-steel sm:text-xl;
-  }
+
+  /* Buttons: one shape, three variants. Tap targets are at least 48px tall. */
   .btn {
-    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-md px-6 py-3 text-base font-semibold transition-colors duration-150;
-    font-stretch: 105%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--r-md);
+    font-family: var(--ff-body);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+    text-align: center;
+    text-decoration: none;
+    transition-property: background-color, border-color, color, box-shadow, transform;
+    transition-duration: var(--motion-fast);
+    transition-timing-function: var(--motion-ease);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn:active {
+    box-shadow: var(--elev-press);
+    transform: translateY(1px);
+  }
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    background-color: var(--c-rule);
+    color: var(--c-tyre-muted);
+    border-color: var(--c-rule);
+    box-shadow: none;
+    transform: none;
+    cursor: not-allowed;
   }
   .btn-primary {
-    @apply btn bg-livery text-white hover:bg-livery-dark;
+    background-color: var(--action-bg);
+    color: var(--action-fg);
   }
-  .btn-navy {
-    @apply btn bg-navy text-white hover:bg-navy-soft;
+  @media (hover: hover) {
+    .btn-primary:hover {
+      background-color: var(--action-bg-hover);
+    }
+    .btn-secondary:hover {
+      background-color: color-mix(in srgb, var(--action-line) 8%, transparent);
+    }
   }
-  .btn-ghost-light {
-    @apply btn border-2 border-white/70 text-white hover:border-white hover:bg-white/10;
+  .btn-secondary {
+    border: 2px solid var(--action-line);
+    color: var(--fg);
+    background-color: transparent;
   }
-  .btn-ghost {
-    @apply btn border-2 border-navy/20 text-navy hover:border-navy;
-  }
+
+  /* Links in running text are always underlined; colour never carries the meaning alone. */
   .link {
-    @apply font-semibold text-navy underline decoration-livery decoration-2 underline-offset-4 hover:decoration-navy;
+    color: var(--link);
+    font-weight: 700;
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    transition: text-decoration-thickness var(--motion-fast) var(--motion-ease), color var(--motion-fast);
   }
-  /* The vehicle coachline: a red pinstripe over a navy band, as painted on the fleet. */
+  @media (hover: hover) {
+    .link:hover {
+      color: var(--link-hover);
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  /* A link that stands on its own rather than inside a sentence: a 44px tall tap target. */
+  .link-standalone {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
+
+  /* The signwritten phone number. */
+  .phone-lettering {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    font-family: var(--ff-display);
+    font-weight: 700;
+    font-size: var(--fs-phone);
+    line-height: 1;
+    letter-spacing: var(--ls-phone);
+    font-variant-numeric: lining-nums tabular-nums;
+    color: var(--fg);
+    text-decoration-line: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.18em;
+    transition: text-decoration-color var(--motion-fast) var(--motion-ease);
+  }
+  @media (hover: hover) {
+    .phone-lettering:hover {
+      text-decoration-color: currentColor;
+    }
+  }
+
+  /* The coachline: a double pinstripe taken from the lining paint on the lorry bodies. */
   .coachline {
-    height: 10px;
-    background: linear-gradient(to bottom, #C8102E 0 4px, transparent 4px 6px, #13294B 6px 10px);
+    height: 7px;
+    border-top: 3px solid var(--line-coach);
+    border-bottom: 1px solid var(--line-coach);
+  }
+
+  .numerals {
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  /* Forms (rendered on the official site only). */
+  .label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
   }
   .field {
-    @apply block w-full rounded-md border border-rule bg-white px-4 py-3 text-base text-navy placeholder:text-steel-light transition-colors;
-    min-height: 48px;
+    display: block;
+    width: 100%;
+    min-height: 3.25rem;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--line-input);
+    border-radius: var(--r-sm);
+    background-color: var(--c-white);
+    color: var(--c-tyre);
+    font-size: 1.0625rem;
+    line-height: 1.4;
+    transition: border-color var(--motion-fast) var(--motion-ease);
   }
-  .field:hover { @apply border-steel-light; }
-  .field:focus { @apply border-navy outline-none ring-2 ring-navy/20; }
-  .field[aria-invalid="true"] { @apply border-livery ring-2 ring-livery/15; }
-  .label {
-    @apply mb-1.5 block text-sm font-semibold text-navy;
+  .field:focus {
+    border-color: var(--c-panel);
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
   }
-}
+  .field[aria-invalid="true"] {
+    border-color: var(--error);
+  }
 
-/* One orchestrated moment: the hero coachline draws in, headline follows. */
-@keyframes draw {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
+  /* The phone-width action bar steps aside while someone is typing in a form field. */
+  body:has(.field:focus) .mobile-bar {
+    display: none;
+  }
+
+  /* Long-form text: legal pages, the moving checklist. */
+  .prose-bisley {
+    max-width: var(--measure-body);
+  }
+  .prose-bisley > * + * {
+    margin-top: 1em;
+  }
+  .prose-bisley h2 {
+    margin-top: 2.5rem;
+    font-size: var(--fs-h3);
+    line-height: var(--lh-h3);
+    font-weight: 600;
+  }
+  .prose-bisley h3 {
+    margin-top: 1.75rem;
+    font-family: var(--ff-body);
+    font-size: var(--fs-h4);
+    line-height: var(--lh-h4);
+    font-weight: 700;
+  }
+  .prose-bisley ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+  }
+  .prose-bisley ul > li + li {
+    margin-top: 0.4em;
+  }
+  .prose-bisley a {
+    color: var(--link);
+    font-weight: 700;
+    text-decoration-line: underline;
+    text-underline-offset: 0.2em;
+  }
 }
-@keyframes rise {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: none; }
-}
-.hero-line { transform-origin: left; animation: draw 900ms cubic-bezier(.2,.7,.2,1) both; }
-.hero-rise { animation: rise 700ms cubic-bezier(.2,.7,.2,1) both; }
-.hero-rise-2 { animation: rise 700ms 120ms cubic-bezier(.2,.7,.2,1) both; }
-.hero-rise-3 { animation: rise 700ms 240ms cubic-bezier(.2,.7,.2,1) both; }

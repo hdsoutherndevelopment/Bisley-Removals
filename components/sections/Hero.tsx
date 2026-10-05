@@ -1,40 +1,39 @@
-import Image from "next/image";
-import Link from "next/link";
-import { Phone } from "lucide-react";
-import { business, photos } from "@/lib/config";
+import { Photo } from "@/components/site/Photo";
+import { PhoneLettering, QuoteButton } from "@/components/site/Actions";
+import { photos } from "@/lib/config";
 
+/**
+ * The lorry outside a Surrey home, then the livery panel: the one bold element on the page.
+ * Words sit on the solid panel, never on the photograph. Nothing animates in.
+ */
 export function Hero() {
   return (
-    <section className="relative isolate overflow-hidden bg-navy-deep text-white">
-      <Image
-        src={photos.hero.src}
-        alt={photos.hero.alt}
-        fill
-        priority
-        sizes="100vw"
-        className="-z-20 object-cover object-center"
-      />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy-deep/95 via-navy-deep/80 to-navy-deep/25" />
-      <div className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-navy-deep/70 to-transparent" />
-
-      <div className="wrap flex min-h-[clamp(560px,82vh,780px)] flex-col justify-center py-20">
-        <p className="hero-rise text-base font-semibold text-white/85 sm:text-lg">
-          Family-run in Bisley, near Woking, since {business.established}
-        </p>
-        <h1 className="display hero-rise-2 mt-5 max-w-[15ch] text-[clamp(2.6rem,7vw,5.4rem)]">
-          Moving home? Let us take care of everything.
-        </h1>
-        <p className="hero-rise-3 mt-6 max-w-[34rem] text-lg text-white/85 sm:text-xl">
-          Trusted removals and storage services delivered with care, professionalism and over 40 years of experience.
-        </p>
-        <div className="hero-rise-3 mt-9 flex flex-col gap-3 sm:flex-row">
-          <Link href="/quote" className="btn-primary text-lg">Get a Free Quote</Link>
-          <a href={business.phoneHref} className="btn-ghost-light text-lg">
-            <Phone className="h-5 w-5" aria-hidden="true" /> Call {business.phone}
-          </a>
+    <section aria-labelledby="hero-title">
+      <div className="mx-auto max-w-wide">
+        <Photo
+          photo={photos.lorryDriveway}
+          aspect="var(--hero-aspect)"
+          sizes="(min-width: 1440px) 1440px, 100vw"
+          priority
+          position="50% 62%"
+          className="[--hero-aspect:4/3] md:[--hero-aspect:16/9] lg:[--hero-aspect:21/9]"
+        />
+      </div>
+      <div className="wrap">
+        <div className="surface-brand relative -mx-margin px-margin pb-10 pt-8 md:mx-0 md:-mt-28 md:max-w-[46rem] md:rounded-md md:p-10 lg:-mt-44 lg:p-12">
+          <h1 id="hero-title" className="text-display font-bold">
+            Surrey removals by our own crews, since 1985
+          </h1>
+          <p className="mt-5 max-w-[36rem] text-lead text-fg-muted">
+            Removals, packing and containerised storage from our yard at Bullhousen Farm in Bisley, near Woking. Every porter
+            is our own full-time employee. No agency staff, no subcontractors.
+          </p>
+          <div data-primary-actions className="mt-8 flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:gap-8">
+            <QuoteButton className="w-full sm:w-auto" />
+            <PhoneLettering />
+          </div>
         </div>
       </div>
-      <div className="coachline hero-line" aria-hidden="true" />
     </section>
   );
 }
