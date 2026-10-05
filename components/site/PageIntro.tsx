@@ -32,7 +32,8 @@ export function PageIntro({ trail, title, lead, photo, photoPosition, children }
           <Photo
             photo={photo}
             priority
-            sizes="(min-width: 1024px) 40vw, 100vw"
+            quality={60}
+            sizes="(min-width: 1024px) 40vw, (min-width: 768px) 100vw, 88vw"
             position={photoPosition}
             className="lg:col-span-5"
           />

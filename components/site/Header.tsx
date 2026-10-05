@@ -60,7 +60,7 @@ export function Header() {
   return (
     <header className="relative z-40 bg-page">
       <div className="wrap flex min-h-[4.75rem] items-center justify-between gap-6 py-2">
-        <Logo priority />
+        <Logo eager />
 
         <nav aria-label="Main" className="hidden lg:block">
           <ul className="flex items-center gap-1 xl:gap-2">

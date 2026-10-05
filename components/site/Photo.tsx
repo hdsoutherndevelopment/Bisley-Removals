@@ -7,13 +7,15 @@ type Props = {
   aspect?: string;
   sizes: string;
   priority?: boolean;
+  /** Compression quality. The photos that load first use a little less, so the page paints sooner. */
+  quality?: number;
   position?: string;
   className?: string;
   caption?: string;
 };
 
 /** A photograph in a fixed-ratio frame. Photos never get rounded corners or overlays. */
-export function Photo({ photo, aspect = "4 / 3", sizes, priority = false, position = "50% 50%", className = "", caption }: Props) {
+export function Photo({ photo, aspect = "4 / 3", sizes, priority = false, quality = 65, position = "50% 50%", className = "", caption }: Props) {
   const frame = (
     <div className="relative overflow-hidden bg-alt" style={{ aspectRatio: aspect }}>
       <Image
@@ -22,6 +24,7 @@ export function Photo({ photo, aspect = "4 / 3", sizes, priority = false, positi
         fill
         sizes={sizes}
         priority={priority}
+        quality={quality}
         className="object-cover"
         style={{ objectPosition: position }}
       />

@@ -13,8 +13,9 @@ export function Hero() {
         <Photo
           photo={photos.lorryDriveway}
           aspect="var(--hero-aspect)"
-          sizes="(min-width: 1440px) 1440px, 100vw"
+          sizes="(min-width: 1440px) 1440px, (min-width: 768px) 100vw, 88vw"
           priority
+          quality={60}
           position="50% 62%"
           className="[--hero-aspect:4/3] md:[--hero-aspect:16/9] lg:[--hero-aspect:21/9]"
         />
