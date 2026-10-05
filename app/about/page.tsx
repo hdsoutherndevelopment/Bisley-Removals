@@ -1,72 +1,115 @@
-import type { Metadata } from "next";
-import Image from "next/image";
-import { PageHero } from "@/components/site/PageHero";
-import { FleetTeam } from "@/components/sections/FleetTeam";
-import { Testimonials } from "@/components/sections/Testimonials";
-import { FinalCta } from "@/components/sections/FinalCta";
-import { photos } from "@/lib/config";
+import { PageIntro } from "@/components/site/PageIntro";
+import { Photo } from "@/components/site/Photo";
+import { VideoFacade } from "@/components/sections/VideoFacade";
+import { FinalPanel } from "@/components/sections/FinalPanel";
+import { business, photos } from "@/lib/config";
+import { fleetEquipment } from "@/lib/content";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "About Us: A Family-Run Removals Firm Since 1985",
+export const metadata = pageMeta({
+  title: "About us",
   description:
-    "Bisley Removals & Storage Services has been a family-run removals and storage company near Woking since 1985, with its own fleet and full-time moving teams.",
-  alternates: { canonical: "/about" },
-};
-
-const values = [
-  { title: "Safe", text: "Careful handling, proper materials and insured storage for everything we look after." },
-  { title: "Reliable", text: "Accurate quotes, a planned day and a team that turns up when we say it will." },
-  { title: "Affordable", text: "Honest pricing, with boxes and packing materials delivered and collected for free." },
-  { title: "Personal", text: "A family business that builds long-lasting relationships with its customers." },
-];
+    "A removals and storage firm in Bisley, near Woking, since 1985, with our own full-time crews, our own lorries and a yard at Bullhousen Farm.",
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (
     <>
-      <PageHero
-        title="Our story"
-        intro="A family-run removals and storage firm since 1985, built on trust, hard work and customers who come back to us."
-        image={photos.unloading}
+      <PageIntro
+        trail={[{ name: "About us", path: "/about" }]}
+        title="Removals and storage from Bisley since 1985"
+        lead="A local, family-run firm with our own full-time crews, our own fleet and a yard at Bullhousen Farm, near Woking."
+        photo={photos.lorriesAtHouse}
       />
 
-      <section className="py-20 sm:py-28" aria-labelledby="heritage-title">
-        <div className="wrap grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-          <div className="space-y-5 text-lg text-navy/85">
-            <h2 id="heritage-title" className="h2 text-navy">Over 40 years of moving Surrey</h2>
+      <section aria-labelledby="story-title" className="wrap pb-section">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-gutter">
+          <h2 id="story-title" className="text-h2 font-bold lg:col-span-4">
+            How we work
+          </h2>
+          <div className="space-y-4 text-lead text-fg-muted lg:col-span-7 lg:col-start-6">
             <p>
-              Bisley Removals started in 1985 from our base near Woking. More than four decades on, we’re still family-run and
-              still proud of a trustworthy, professional approach to every move.
+              Since 1985 we have provided an efficient, friendly and cost-effective removals service for homes and businesses across
+              Surrey and beyond, and built our reputation on professionalism, reliability and real care for our customers&apos;
+              belongings.
             </p>
             <p>
-              We’re committed to safe, reliable and affordable removals and storage, and we try to exceed expectations every
-              time. Many of our customers recommend us to friends and return to us when they move again, and many of the
-              area’s leading estate agents refer clients to us.
+              Much of our work comes from customers we have moved before and the people they recommend us to, and local estate
+              agents refer their clients to us.
             </p>
-            <p className="font-semibold text-navy">Your move is our business. That’s the Bisley difference.</p>
-          </div>
-          <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
-            <Image src={photos.storageYard.src} alt={photos.storageYard.alt} fill sizes="(min-width:1024px) 560px, 100vw" className="object-cover" />
           </div>
         </div>
       </section>
 
-      <section className="border-t border-rule bg-paper py-20" aria-labelledby="values-title">
+      <section id="crews" aria-labelledby="crews-title" className="surface-alt section">
+        <div className="wrap grid items-center gap-10 lg:grid-cols-12 lg:gap-gutter">
+          <Photo photo={photos.crew} sizes="(min-width: 1024px) 50vw, 100vw" className="lg:col-span-6" />
+          <div className="lg:col-span-5 lg:col-start-8">
+            <h2 id="crews-title" className="text-h2 font-bold">
+              Our crews
+            </h2>
+            <div className="mt-5 space-y-4 text-fg-muted">
+              <p>
+                We employ only our own full-time porters. No agency staff, no subcontractors. Every member of the team is chosen
+                for their professionalism, attitude and care with other people&apos;s belongings.
+              </p>
+              <p>
+                Everyone is trained hands-on at our yard in Bisley, covering packing, lifting, loading, storage and looking after
+                customers. You will recognise them by their Bisley uniforms.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="fleet-title" className="section">
+        <div className="wrap grid items-center gap-10 lg:grid-cols-12 lg:gap-gutter">
+          <div className="lg:col-span-5">
+            <h2 id="fleet-title" className="text-h2 font-bold">
+              Our fleet and equipment
+            </h2>
+            <p className="mt-5 text-fg-muted">
+              We run our own purpose-built vehicles, maintained to a high standard and painted in our livery, from crew vans to
+              HGV lorries. Each one carries {fleetEquipment.join(", ").replace(/, ([^,]*)$/, " and $1")} as standard, to protect your
+              belongings and your property.
+            </p>
+          </div>
+          <Photo photo={photos.fleet} sizes="(min-width: 1024px) 50vw, 100vw" className="lg:col-span-6 lg:col-start-7" />
+        </div>
+      </section>
+
+      {/* CONFIRM: these videos are hosted on another company's Vimeo account. Ask the client for the original files. */}
+      <section id="videos" aria-labelledby="videos-title" className="surface-alt section">
         <div className="wrap">
-          <h2 id="values-title" className="h2">What we promise</h2>
-          <dl className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {values.map((v) => (
-              <div key={v.title} className="rounded-xl border-t-4 border-livery bg-white p-6 shadow-card">
-                <dt className="heading text-xl">{v.title}</dt>
-                <dd className="mt-2 text-steel">{v.text}</dd>
-              </div>
-            ))}
+          <h2 id="videos-title" className="text-h2 font-bold">
+            A little more about what we do
+          </h2>
+          <p className="mt-4 max-w-measure text-lead text-fg-muted">Two short videos from our crews. They play here, without leaving the page.</p>
+          <div className="mt-10 grid max-w-[44rem] gap-gutter sm:grid-cols-2">
+            <VideoFacade vimeoId="1127106966" title="Lights, Cavan, action" duration="1 minute" />
+            <VideoFacade vimeoId="1127106861" title="You've seen them out on the road" duration="30 seconds" />
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="company-title" className="section">
+        <div className="wrap">
+          <h2 id="company-title" className="text-h2 font-bold">
+            Company details
+          </h2>
+          <dl className="mt-8 grid max-w-[48rem] gap-x-gutter gap-y-4 sm:grid-cols-[12rem_1fr]">
+            <dt className="font-bold">Company</dt>
+            <dd>{business.legalName}</dd>
+            <dt className="font-bold">Company number</dt>
+            <dd className="numerals">{business.companyNumber}, registered in England and Wales</dd>
+            <dt className="font-bold">Registered office</dt>
+            <dd>{business.registeredOffice}</dd>
           </dl>
         </div>
       </section>
 
-      <FleetTeam />
-      <Testimonials />
-      <FinalCta />
+      <FinalPanel />
     </>
   );
 }

@@ -1,31 +1,38 @@
-import type { Metadata } from "next";
-import { QuoteSection } from "@/components/sections/QuoteSection";
-import { Testimonials } from "@/components/sections/Testimonials";
+import { PageIntro } from "@/components/site/PageIntro";
+import { QuoteRoutes } from "@/components/sections/QuoteRoutes";
+import { LazyQuoteForm as QuoteForm } from "@/components/forms/LazyForms";
+import { isDemo } from "@/lib/config";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Get a Free Removals or Storage Quote",
-  description: "Request a free, no-obligation removals or storage quote from Bisley Removals, near Woking. Or call 01483 489611.",
-  alternates: { canonical: "/quote" },
-};
+export const metadata = pageMeta({
+  title: "Get a free quote",
+  description:
+    "Start a free removals quote online, or call 01483 489611. Full house moves, office moves, part loads and single items from Bisley, near Woking.",
+  path: "/quote",
+});
 
-const services = ["Removal", "Storage", "Removal and storage"];
-
-export default async function QuotePage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
-  const sp = await searchParams;
-  const one = (k: string) => (typeof sp[k] === "string" ? (sp[k] as string) : undefined);
-  const service = one("service");
-  const details = one("details")?.slice(0, 2000);
-
+export default function QuotePage() {
   return (
     <>
-      <QuoteSection
-        headingLevel="h1"
-        initial={{
-          ...(service && services.includes(service) ? { service } : {}),
-          ...(details ? { details } : {}),
-        }}
+      <PageIntro
+        trail={[{ name: "Get a free quote", path: "/quote" }]}
+        title="Get a free quote"
+        lead="Choose the form that fits your move. Both go straight to our office, and quotes are free."
       />
-      <Testimonials />
+      <QuoteRoutes />
+      {!isDemo && (
+        <section aria-labelledby="form-title" className="surface-alt section">
+          <div className="wrap max-w-[52rem]">
+            <h2 id="form-title" className="text-h2 font-bold">
+              Or send us the basics
+            </h2>
+            <p className="mt-4 text-lead text-fg-muted">Give us a few details and we will call you back to arrange your quote.</p>
+            <div className="mt-8">
+              <QuoteForm />
+            </div>
+          </div>
+        </section>
+      )}
     </>
   );
 }

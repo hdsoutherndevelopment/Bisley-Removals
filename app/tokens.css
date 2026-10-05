@@ -1,0 +1,151 @@
+/* Bisley "Livery" design tokens. See DESIGN.md.
+   Components use only the semantic tokens (--bg-*, --fg*, --line-*, --action-*, --focus),
+   so surfaces can flip their foregrounds without hard-coded colours. */
+
+:root {
+  /* Palette */
+  --c-panel: #262b2f;          /* Charcoal: hero and closing panels, primary buttons, links, focus */
+  --c-panel-deep: #171a1d;     /* Pressed and hover state of charcoal */
+  --c-cream: #f4ecdd;          /* Signwriter cream: lettering on charcoal only */
+  --c-cream-muted: #d9cdbb;
+  --c-cream-hover: #e6dccb;
+  --c-tyre: #1f2326;           /* Text */
+  --c-tyre-muted: #4a5258;     /* Secondary text */
+  --c-aluminium: #eef0f1;      /* Alternate section surface */
+  --c-white: #ffffff;
+  --c-border-strong: #7c858b;  /* Input borders: 3.76:1 on white */
+  --c-rule: #d5dadd;           /* Decorative dividers only */
+  --c-error: #b3261e;
+  --c-success: #1e6b45;
+
+  /* Surfaces */
+  --bg-page: var(--c-white);
+  --bg-alt: var(--c-aluminium);
+  --bg-brand: var(--c-panel);
+  --bg-inverse: var(--c-tyre);
+
+  /* Foreground, re-scoped per surface */
+  --fg: var(--c-tyre);
+  --fg-muted: var(--c-tyre-muted);
+  --heading: var(--c-tyre);
+  --link: var(--c-panel);
+  --link-hover: var(--c-panel-deep);
+
+  /* Lines */
+  --line-input: var(--c-border-strong);
+  --line-rule: var(--c-rule);
+  --line-coach: var(--c-panel);
+
+  /* Actions */
+  --action-bg: var(--c-panel);
+  --action-bg-hover: var(--c-panel-deep);
+  --action-fg: var(--c-white);
+  --action-line: var(--c-tyre);
+
+  /* Feedback and focus */
+  --error: var(--c-error);
+  --success: var(--c-success);
+  --focus: var(--c-panel);
+
+  /* Type families: self-hosted through next/font (app/fonts.ts), each with a metric-matched fallback */
+  --ff-display: var(--font-besley), Georgia, "Times New Roman", serif;
+  --ff-body: var(--font-atkinson), system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* Type sizes, fluid from a 375px to a 1440px viewport */
+  --fs-display: clamp(2.5rem, 1.796rem + 3.005vw, 4.5rem);     /* 40 to 72 */
+  --fs-h1: clamp(2.25rem, 1.81rem + 1.878vw, 3.5rem);           /* 36 to 56, inner page titles */
+  --fs-h2: clamp(1.875rem, 1.479rem + 1.69vw, 3rem);            /* 30 to 48 */
+  --fs-quote: clamp(1.5rem, 1.236rem + 1.127vw, 2.25rem);       /* 24 to 36 */
+  --fs-phone: clamp(2rem, 1.648rem + 1.502vw, 3rem);            /* 32 to 48 */
+  --fs-h3: clamp(1.3125rem, 1.246rem + 0.2817vw, 1.5rem);       /* 21 to 24 */
+  --fs-h4: clamp(1.1875rem, 1.143rem + 0.1878vw, 1.3125rem);    /* 19 to 21 */
+  --fs-lead: clamp(1.1875rem, 1.143rem + 0.1878vw, 1.3125rem);  /* 19 to 21 */
+  --fs-body: clamp(1.0625rem, 1.04rem + 0.0939vw, 1.125rem);    /* 17 to 18 */
+  --fs-small: 0.9375rem;                                         /* 15 */
+
+  --lh-display: 1.04;
+  --lh-h1: 1.08;
+  --lh-h2: 1.1;
+  --lh-h3: 1.2;
+  --lh-h4: 1.3;
+  --lh-quote: 1.3;
+  --lh-lead: 1.5;
+  --lh-body: 1.6;
+
+  --ls-display: -0.015em;
+  --ls-h2: -0.01em;
+  --ls-phone: 0.01em;
+
+  /* Spacing */
+  --space-section: clamp(4rem, 2.239rem + 7.512vw, 9rem);       /* 64 to 144 */
+  --space-gutter: clamp(1rem, 0.6479rem + 1.502vw, 2rem);       /* 16 to 32 */
+  --space-margin: clamp(1.25rem, 0.2817rem + 4.131vw, 4rem);    /* 20 to 64 */
+
+  /* Layout */
+  --layout-max: 76rem;
+  --layout-wide: 90rem;
+  --measure-body: 66ch;
+
+  /* Corners */
+  --r-sm: 3px;
+  --r-md: 6px;
+
+  /* Elevation: only for things that float over content */
+  --elev-float: 0 1px 2px rgb(31 35 38 / 0.1), 0 10px 28px -6px rgb(31 35 38 / 0.24);
+  --elev-press: inset 0 2px 0 rgb(0 0 0 / 0.22);
+
+  /* Motion */
+  --motion-fast: 150ms;
+  --motion-base: 200ms;
+  --motion-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  /* Safe areas */
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+}
+
+/* Charcoal surfaces: cream lettering, cream actions, cream focus ring. */
+.surface-brand {
+  --fg: var(--c-cream);
+  --fg-muted: var(--c-cream-muted);
+  --heading: var(--c-cream);
+  --link: var(--c-cream);
+  --link-hover: var(--c-white);
+  --line-coach: var(--c-cream-muted);
+  --focus: var(--c-cream);
+  --action-bg: var(--c-cream);
+  --action-bg-hover: var(--c-cream-hover);
+  --action-fg: var(--c-panel);
+  --action-line: var(--c-cream);
+  background-color: var(--bg-brand);
+  color: var(--fg);
+}
+
+.surface-inverse {
+  --fg: var(--c-white);
+  --fg-muted: var(--c-cream-muted);
+  --heading: var(--c-white);
+  --link: var(--c-cream);
+  --link-hover: var(--c-white);
+  --line-coach: var(--c-cream-muted);
+  --line-rule: rgb(255 255 255 / 0.16);
+  --focus: var(--c-cream);
+  --action-bg: var(--c-cream);
+  --action-bg-hover: var(--c-cream-hover);
+  --action-fg: var(--c-panel);
+  --action-line: var(--c-cream);
+  background-color: var(--bg-inverse);
+  color: var(--fg);
+}
+
+.surface-alt {
+  background-color: var(--bg-alt);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fast: 0ms;
+    --motion-base: 0ms;
+  }
+}

@@ -1,17 +1,30 @@
 import Link from "next/link";
 import { business } from "@/lib/config";
 
+export const metadata = { title: "Page not found" };
+
 export default function NotFound() {
   return (
-    <section className="py-24 sm:py-32">
-      <div className="wrap max-w-2xl">
-        <h1 className="display text-[clamp(2.2rem,5vw,3.25rem)]">This page has moved on</h1>
-        <p className="lede mt-4">The page you’re looking for doesn’t exist. Head back home, or call us on {business.phone}.</p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <Link href="/" className="btn-navy">Back to home</Link>
-          <Link href="/quote" className="btn-primary">Get a Free Quote</Link>
-        </div>
-      </div>
+    <section aria-labelledby="page-title" className="wrap section">
+      <p className="numerals font-display text-h3 font-semibold text-fg-muted">404</p>
+      <h1 id="page-title" className="mt-2 text-h1 font-bold">
+        This page has moved on
+      </h1>
+      <p className="mt-5 max-w-measure text-lead text-fg-muted">
+        The page you are looking for doesn&apos;t exist, or it has moved. Try one of these, or call us on{" "}
+        <a href={business.phoneHref} className="link">{business.phone}</a>.
+      </p>
+      <ul className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+        <li>
+          <Link href="/quote" className="btn btn-primary">Get a free quote</Link>
+        </li>
+        <li>
+          <Link href="/" className="btn btn-secondary">Go to the home page</Link>
+        </li>
+        <li>
+          <Link href="/contact" className="link link-standalone">Contact us</Link>
+        </li>
+      </ul>
     </section>
   );
 }

@@ -1,146 +1,115 @@
-import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import { Check, Phone } from "lucide-react";
-import { PageHero } from "@/components/site/PageHero";
-import { FleetLineup } from "@/components/sections/FleetLineup";
-import { Testimonials } from "@/components/sections/Testimonials";
-import { FinalCta } from "@/components/sections/FinalCta";
-import { business, photos } from "@/lib/config";
+import { PageIntro } from "@/components/site/PageIntro";
+import { Photo } from "@/components/site/Photo";
+import { PhoneLettering, QuoteButton } from "@/components/site/Actions";
+import { ReviewQuote } from "@/components/sections/ReviewsBlock";
+import { FinalPanel } from "@/components/sections/FinalPanel";
+import { photos } from "@/lib/config";
+import { fleetEquipment } from "@/lib/content";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "House, Furniture & Commercial Removals in Woking and Surrey",
+export const metadata = pageMeta({
+  title: "House removals in Woking and Surrey",
   description:
-    "Professional house, furniture and office removals from Bisley, near Woking. Full-time uniformed teams, our own fleet and expert packing services since 1985.",
-  alternates: { canonical: "/removals" },
-};
-
-const packingOptions = [
-  { title: "Full packing service", text: "We wrap and box everything in your home, usually the day before you move." },
-  { title: "Fragile items only", text: "We pack glassware, china, ornaments, pictures and mirrors. You pack the rest." },
-  { title: "Pack it yourself", text: "We deliver complimentary boxes, bubble wrap and paper, and collect them afterwards." },
-];
-
-const materials = [
-  "Double-walled boxes and premium packing cases",
-  "Extra-strong cartons for china, glass and books",
-  "Clean wrapping paper, soft tissue and bubble wrap",
-  "Wardrobe cartons that keep clothes clean and crease-free",
-  "Free delivery and collection of all materials",
-];
+    "Full or part house moves, packed, loaded and driven by our own full-time crews from Bisley, near Woking. Free quotes on 01483 489611.",
+  path: "/removals",
+});
 
 export default function RemovalsPage() {
   return (
     <>
-      <PageHero
-        title="Professional removals you can rely on"
-        intro="We’ll take good care of you and your furniture. Trusted locally since 1985 for first-class moves, planned with care and carried out with precision."
-        image={photos.unloading}
+      <PageIntro
+        trail={[{ name: "House removals", path: "/removals" }]}
+        title="House removals in Woking and across Surrey"
+        lead="Full or part house moves, packed, loaded and driven by our own full-time crews from our yard in Bisley."
+        photo={photos.lorryStreet}
       >
-        <Link href="/quote" className="btn-primary">Get a Free Quote</Link>
-        <a href={business.phoneHref} className="btn-ghost-light"><Phone className="h-4 w-4" aria-hidden="true" /> {business.phone}</a>
-      </PageHero>
+        <QuoteButton />
+        <PhoneLettering />
+      </PageIntro>
 
-      <section className="py-20 sm:py-24" aria-labelledby="house-title">
-        <div className="wrap grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
-          <div className="space-y-5 text-lg text-navy/85">
-            <h2 id="house-title" className="h2 text-navy">House removals</h2>
-            <p>
-              Our aim has always been simple: a first-class removals service built on professionalism, experience and
-              personal care. We start by understanding what you need, then plan every detail so the day itself runs smoothly.
-            </p>
-            <p>
-              As a local, family-run business established in 1985, we’ve grown through reputation and recommendation. Many of
-              the area’s leading estate agents continue to refer their clients to us.
-            </p>
-            <p>
-              Every member of our team is a full-time, uniformed professional, trained in packing, lifting and transport. Our
-              estimators make sure your quotation is accurate, so you get the right vehicle, the right team and the right
-              equipment every time.
-            </p>
-          </div>
-          <div className="relative aspect-[4/5] overflow-hidden rounded-xl lg:aspect-auto">
-            <Image src={photos.hero.src} alt={photos.hero.alt} fill sizes="(min-width:1024px) 480px, 100vw" className="object-cover" />
-          </div>
-        </div>
-      </section>
-
-      <section id="furniture" className="border-y border-rule bg-paper py-20 sm:py-24" aria-labelledby="furniture-title">
-        <div className="wrap grid gap-10 lg:grid-cols-2 lg:gap-20">
-          <h2 id="furniture-title" className="h2">Furniture removals</h2>
-          {/* CONFIRM: check whether single-item and furniture-only moves are quoted separately. */}
-          <div className="space-y-4 text-lg text-navy/85">
-            <p>
-              Beds, wardrobes, sofas, dining tables and heirlooms are wrapped, protected and loaded by people who handle
-              furniture every working day.
-            </p>
-            <p>
-              Anything that needs taking apart is dismantled and rebuilt at the other end, and each piece is placed in the room
-              you choose. Change your mind about where the sofa goes? We’ll move it.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section id="packing" className="py-20 sm:py-24" aria-labelledby="packing-title">
-        <div className="wrap">
-          <div className="max-w-2xl">
-            <h2 id="packing-title" className="h2">Expert packing services</h2>
-            <p className="lede mt-4">Every item protected, from treasured keepsakes to everyday essentials. Choose the level of help that suits you.</p>
-          </div>
-          <ul className="mt-12 grid gap-6 md:grid-cols-3">
-            {packingOptions.map((o) => (
-              <li key={o.title} className="rounded-xl bg-white p-7 shadow-card ring-1 ring-rule/60">
-                <h3 className="heading text-xl">{o.title}</h3>
-                <p className="mt-2 text-steel">{o.text}</p>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-12 grid gap-10 rounded-xl bg-navy p-8 text-white sm:p-12 lg:grid-cols-2">
-            <div>
-              <h3 className="heading text-2xl">What we provide</h3>
-              <p className="mt-3 text-white/80">
-                Packing yourself is a good chance to declutter. Mark fragile boxes clearly and label which room each one belongs in.
+      <section aria-labelledby="plan-title" className="wrap pb-section">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-gutter">
+          <div className="lg:col-span-7">
+            <h2 id="plan-title" className="text-h2 font-bold">
+              Planned before the day
+            </h2>
+            <div className="mt-6 space-y-4 text-lead text-fg-muted">
+              <p>
+                Our estimators plan every move before the day, so your quote is accurate and you get the right vehicle, the right
+                team and the right equipment.
+              </p>
+              <p>
+                Local estate agents refer their clients to us, and much of our work comes from customers we have moved before.
               </p>
             </div>
-            <ul className="space-y-3">
-              {materials.map((m) => (
-                <li key={m} className="flex gap-3">
-                  <Check className="mt-1 h-5 w-5 shrink-0 text-livery" aria-hidden="true" /> {m}
-                </li>
-              ))}
-            </ul>
+          </div>
+          <div className="lg:col-span-4 lg:col-start-9">
+            <ReviewQuote name="David Gale" />
           </div>
         </div>
       </section>
 
-      <section id="commercial" className="border-t border-rule bg-paper py-20 sm:py-24" aria-labelledby="commercial-title">
-        <div className="wrap grid gap-10 lg:grid-cols-2 lg:gap-20">
-          <div>
-            <h2 id="commercial-title" className="h2">Commercial and office removals</h2>
-            <p className="lede mt-4">Experienced teams who manage your business move from beginning to end.</p>
-          </div>
-          <div className="space-y-4 text-lg text-navy/85">
-            <p>From a small internal office move to a relocation across the country, every move is planned and run by our practised staff.</p>
-            <p>
-              We can store your equipment securely during the move, offer temporary storage if your new premises aren’t ready,
-              and keep office items that need long-term storage in our guarded facilities.
+      <section aria-labelledby="crew-title" className="surface-alt section">
+        <div className="wrap grid items-center gap-10 lg:grid-cols-12 lg:gap-gutter">
+          <Photo photo={photos.crew} sizes="(min-width: 1024px) 50vw, 100vw" className="lg:col-span-6" />
+          <div className="lg:col-span-5 lg:col-start-8">
+            <h2 id="crew-title" className="text-h2 font-bold">
+              Our own crews, in uniform
+            </h2>
+            <p className="mt-5 text-fg-muted">
+              Every porter is a full-time member of our team, trained at our yard in packing, lifting, loading and storage. We
+              don&apos;t use agency staff or subcontractors, so the people in your home are people we know.
             </p>
-            <Link href="/storage" className="link inline-block">See our storage options</Link>
+            <Link href="/about#crews" className="link link-standalone mt-4">
+              Meet the crews
+            </Link>
           </div>
         </div>
       </section>
 
-      <section className="py-20 sm:py-24" aria-labelledby="fleet-title">
-        <div className="wrap">
-          <h2 id="fleet-title" className="h2 max-w-xl">Our own fleet, matched to your move</h2>
-          <p className="lede mt-4 max-w-2xl">From compact vans for smaller moves to pantechnicon lorries for complex, multi-day relocations.</p>
-          <div className="mt-12"><FleetLineup /></div>
+      <section aria-labelledby="fleet-title" className="section">
+        <div className="wrap grid items-center gap-10 lg:grid-cols-12 lg:gap-gutter">
+          <div className="lg:col-span-5">
+            <h2 id="fleet-title" className="text-h2 font-bold">
+              The right vehicle for the access
+            </h2>
+            <p className="mt-5 text-fg-muted">
+              We own and maintain our fleet: crew vans for boxes and smaller jobs, Luton and low-loader vans for tight drives
+              and difficult access, and pantechnicon lorries for the largest loads and moves that take more than a day.
+            </p>
+            <p className="mt-4 text-fg-muted">Every vehicle carries {fleetEquipment.join(", ").replace(/, ([^,]*)$/, " and $1")}.</p>
+          </div>
+          <Photo photo={photos.fleet} sizes="(min-width: 1024px) 50vw, 100vw" className="lg:col-span-6 lg:col-start-7" />
         </div>
       </section>
 
-      <Testimonials />
-      <FinalCta />
+      <section aria-labelledby="extras-title" className="wrap pb-section">
+        <h2 id="extras-title" className="text-h2 font-bold">
+          Packing and storage, if you need them
+        </h2>
+        <div className="coachline mt-8" aria-hidden="true" />
+        <div className="grid divide-y divide-rule md:grid-cols-3 md:divide-x md:divide-y-0">
+          <div className="py-6 md:pr-gutter">
+            <h3 className="text-h3 font-semibold">Packing</h3>
+            <p className="mt-2 text-fg-muted">Full packing, fragile items only, or free materials to pack yourself.</p>
+            <Link href="/packing" className="link link-standalone mt-2">Packing options</Link>
+          </div>
+          <div className="py-6 md:px-gutter">
+            <h3 className="text-h3 font-semibold">Storage</h3>
+            <p className="mt-2 text-fg-muted">If your dates don&apos;t line up, we store your things in sealed containers until you need them.</p>
+            <Link href="/storage" className="link link-standalone mt-2">How storage works</Link>
+          </div>
+          <div className="py-6 md:pl-gutter">
+            <h3 className="text-h3 font-semibold">Moving day</h3>
+            <p className="mt-2 text-fg-muted">The crew usually arrives around 8:30am. Here is how the rest of the day runs.</p>
+            <Link href="/moving-day" className="link link-standalone mt-2">The moving-day guide</Link>
+          </div>
+        </div>
+        <div className="coachline" aria-hidden="true" />
+      </section>
+
+      <FinalPanel />
     </>
   );
 }
