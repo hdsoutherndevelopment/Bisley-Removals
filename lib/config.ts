@@ -17,7 +17,17 @@
 export const siteTier: "demo" | "official" = process.env.SITE_TIER === "official" ? "official" : "demo";
 export const isDemo = siteTier === "demo";
 
-export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://bisleyremovals.co.uk").replace(/\/$/, "");
+/**
+ * The site's own absolute address, for canonical links, the sitemap, structured data and the share
+ * image. Set NEXT_PUBLIC_SITE_URL explicitly at launch. On Vercel without it, the project's
+ * production address is used, so a demo's share image and links always point at the demo itself.
+ */
+const vercelProductionHost =
+  process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_PROJECT_PRODUCTION_URL;
+export const siteUrl = (
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (vercelProductionHost ? `https://${vercelProductionHost}` : "https://bisleyremovals.co.uk")
+).replace(/\/$/, "");
 
 export const business = {
   // CONFIRM: public trading name. The logo, lorries and quote form use "Bisley Removal Services";
